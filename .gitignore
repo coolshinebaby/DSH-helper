@@ -1,0 +1,24 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+*.exe
+
+# 日志与运行时文件
+*.log
+npm-debug.log*
+
+# 本地偏好（运行期写入 userData，与源码无关）
+monitor-preferences.json
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 环境
+.env
+.env.*

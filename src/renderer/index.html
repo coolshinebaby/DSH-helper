@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSH helper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="window-shell" id="shell">
+    <header class="titlebar" id="titlebar">
+      <div class="titlebar-left no-drag">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div class="brand-copy">
+          <strong class="brand-title">DSH&nbsp;helper</strong>
+          <span class="compact-summary no-drag">
+            <span><i class="compact-dot operational"></i><strong id="compactHealthy">0</strong></span>
+            <span><i class="compact-dot degraded"></i><strong id="compactWarning">0</strong></span>
+            <span><i class="compact-dot outage"></i><strong id="compactOutage">0</strong></span>
+          </span>
+          <span id="summaryText" class="hidden">正在连接...</span>
+        </div>
+      </div>
+      <div class="window-actions no-drag">
+        <button class="icon-button" id="settingsButton" title="显示设置" aria-label="显示设置">
+          <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.09A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.09A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.09A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.37.25.73.6 1 .99.25.35.39.74.4 1.1V11h.2v4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+        </button>
+        <button class="icon-button orb-button" id="orbButton" title="缩小为悬浮球" aria-label="缩小为悬浮球">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        </button>
+        <button class="icon-button" id="collapseButton" title="折叠悬浮窗" aria-label="折叠悬浮窗">
+          <svg viewBox="0 0 24 24"><path id="collapseIcon" d="m8 14 4-4 4 4"/></svg>
+        </button>
+        <button class="icon-button close" id="hideButton" title="隐藏到托盘" aria-label="隐藏到托盘">
+          <svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="orb-surface" id="orbSurface" aria-label="会话简略状态">
+      <div class="orb-drag-handle" title="拖动窗口"><span></span></div>
+      <div class="orb-session-list no-drag" id="orbSessionList"></div>
+    </section>
+
+    <section class="compact-current-area no-drag" id="compactCurrentArea">
+      <article class="compact-provider-card" id="compactProviderCard">
+        <span class="compact-provider-heading"><i class="status-dot" id="compactCurrentDot"></i><span class="priority-badge hidden" id="compactPriority"></span><strong id="compactCurrentName">未选择供应商</strong><span class="current-badge">当前</span></span>
+        <span class="severity" id="compactSeverity">未知</span>
+        <span class="compact-provider-meta"><span id="compactBalance"></span><span class="side-metric" id="compactLatency"></span></span>
+        <small id="compactCurrentType"></small>
+      </article>
+      <div class="compact-harness-list" id="compactHarnessList"></div>
+    </section>
+
+    <div class="full-content" id="fullContent">
+      <section class="provider-module module-card no-drag expanded" id="providerModule">
+      <button class="module-heading" id="providerModuleHeading"><strong>供应商</strong><span id="providerModuleSummary">正在读取...</span></button>
+      <div class="module-body" id="providerModuleBody">
+      <section class="overview">
+        <button data-filter="all" class="active"><strong id="allCount">0</strong><span>全部</span></button>
+        <button data-filter="operational"><strong id="healthyCount">0</strong><span>正常</span></button>
+        <button data-filter="degraded"><strong id="warningCount">0</strong><span>需关注</span></button>
+        <button data-filter="outage"><strong id="outageCount">0</strong><span>故障</span></button>
+      </section>
+
+      <div class="notice hidden" id="notice"></div>
+
+      <nav class="type-tabs no-drag" id="typeTabs" aria-label="供应商类型"></nav>
+
+      <section class="toolbar no-drag">
+        <label class="search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="searchInput" type="search" placeholder="搜索供应商" autocomplete="off">
+        </label>
+      </section>
+
+      <section class="provider-list no-drag" id="providerList"></section>
+      </div>
+      </section>
+
+      <section class="harness-section module-card no-drag collapsed" id="harnessModule">
+        <button class="module-heading" id="harnessModuleHeading"><strong>DeepSeek</strong><span id="harnessSummary">正在读取任务...</span></button>
+        <div class="module-body"><div class="harness-list" id="harnessList"></div></div>
+      </section>
+    </div>
+
+    <aside class="settings-panel no-drag" id="settingsPanel" aria-hidden="true">
+      <div class="settings-header"><strong>显示设置</strong><button class="icon-button" id="closeSettings" aria-label="关闭设置"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
+      <label class="setting-row"><span><strong>永久置顶</strong><small>始终保持在其他窗口上方</small></span><input type="checkbox" id="alwaysOnTop" checked disabled></label>
+      <label class="setting-row"><span><strong>自动刷新</strong><small>定时重读本地状态</small></span><input type="checkbox" id="autoRefresh"></label>
+      <label class="slider-row"><span>窗口透明度</span><output id="opacityValue">96%</output><input id="opacity" type="range" min="65" max="100" step="1"></label>
+      <label class="select-row"><span>刷新间隔</span><select id="refreshInterval"><option value="1">1 秒</option><option value="30">30 秒</option><option value="60">1 分钟</option><option value="300">5 分钟</option><option value="900">15 分钟</option></select></label>
+      <button class="quit-button" id="quitButton">退出 DSH helper</button>
+    </aside>
+  </main>
+  <script src="app.js"></script>
+  <script src="debug-layout.js"></script>
+</body>
+</html>

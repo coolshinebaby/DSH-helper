@@ -1,0 +1,47 @@
+{
+  "name": "dsh-helper",
+  "version": "1.0.7",
+  "description": "DSH helper desktop overlay",
+  "main": "src/main.js",
+  "author": "DSH",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder --win portable",
+    "build:dir": "electron-builder --dir"
+  },
+  "dependencies": {
+    "sql.js": "^1.13.0"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.ccswitch.floatmonitor",
+    "productName": "DSH helper",
+    "asar": true,
+    "icon": "assets/icon.ico",
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    },
+    "files": [
+      "src/**/*",
+      "assets/icon.ico",
+      "node_modules/sql.js/dist/sql-wasm.js",
+      "node_modules/sql.js/dist/sql-wasm.wasm",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "DSH-helper-${version}-portable.${ext}"
+    }
+  }
+}
