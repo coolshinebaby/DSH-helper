@@ -5,6 +5,14 @@
   "main": "src/main.js",
   "author": "DSH",
   "license": "MIT",
+  "homepage": "https://github.com/coolshinebaby/DSH-helper#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coolshinebaby/DSH-helper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coolshinebaby/DSH-helper/issues"
+  },
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
